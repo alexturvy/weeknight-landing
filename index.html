@@ -1,0 +1,1152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Weeknight — Meal planning that actually works</title>
+  <meta name="description" content="Text us your preferences, get a personalized meal plan, and your grocery cart built automatically. $1 for your first week.">
+
+  <!-- Preload fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+
+  <!-- Favicon -->
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><text y='24' font-size='24'>🍳</text></svg>">
+
+  <style>
+    /* ===== CSS Reset & Base ===== */
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    :root {
+      /* Kitchen Counter Palette */
+      --cream: #FDF6E9;
+      --cream-dark: #F5EBD8;
+      --terracotta: #C75B39;
+      --terracotta-light: #E07B5A;
+      --terracotta-dark: #A84A2D;
+      --charcoal: #2D2A26;
+      --charcoal-light: #4A4640;
+      --warm-gray: #8B8477;
+      --butter: #F5E6C8;
+
+      /* Typography */
+      --font-display: 'Fraunces', Georgia, serif;
+      --font-body: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+
+      /* Spacing */
+      --space-xs: 0.5rem;
+      --space-sm: 1rem;
+      --space-md: 1.5rem;
+      --space-lg: 2.5rem;
+      --space-xl: 4rem;
+      --space-2xl: 6rem;
+
+      /* Transitions */
+      --transition-fast: 150ms ease;
+      --transition-medium: 300ms ease;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    body {
+      font-family: var(--font-body);
+      font-size: 1rem;
+      line-height: 1.6;
+      color: var(--charcoal);
+      background-color: var(--cream);
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+    }
+
+    /* ===== Typography ===== */
+    h1, h2, h3 {
+      font-family: var(--font-display);
+      font-weight: 600;
+      line-height: 1.2;
+    }
+
+    h1 {
+      font-size: clamp(2.5rem, 8vw, 4.5rem);
+      letter-spacing: -0.02em;
+    }
+
+    h2 {
+      font-size: clamp(1.75rem, 5vw, 2.5rem);
+      letter-spacing: -0.01em;
+    }
+
+    h3 {
+      font-size: 1.25rem;
+      font-weight: 500;
+    }
+
+    p {
+      max-width: 65ch;
+    }
+
+    /* ===== Layout ===== */
+    .container {
+      width: 100%;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 var(--space-md);
+    }
+
+    section {
+      padding: var(--space-xl) 0;
+    }
+
+    /* ===== Header / Logo ===== */
+    header {
+      padding: var(--space-md) 0;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      background: linear-gradient(to bottom, var(--cream) 60%, transparent);
+    }
+
+    .logo {
+      font-family: var(--font-display);
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--charcoal);
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .logo-mark {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 2rem;
+      height: 2rem;
+      background: var(--terracotta);
+      border-radius: 6px;
+      transform: rotate(-3deg);
+    }
+
+    .logo-mark svg {
+      width: 1.25rem;
+      height: 1.25rem;
+      fill: var(--cream);
+    }
+
+    /* ===== Hero Section ===== */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      padding-top: calc(var(--space-xl) + 60px);
+      padding-bottom: var(--space-xl);
+    }
+
+    .hero-content {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: var(--space-xl);
+      align-items: center;
+    }
+
+    @media (min-width: 900px) {
+      .hero-content {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    .hero-text {
+      max-width: 560px;
+    }
+
+    .hero-headline {
+      margin-bottom: var(--space-md);
+      color: var(--charcoal);
+    }
+
+    .hero-headline em {
+      font-style: normal;
+      color: var(--terracotta);
+    }
+
+    .hero-subhead {
+      font-size: 1.25rem;
+      color: var(--charcoal-light);
+      margin-bottom: var(--space-lg);
+      max-width: 48ch;
+    }
+
+    /* ===== CTA Section ===== */
+    .cta-group {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-md);
+    }
+
+    .phone-form {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-sm);
+    }
+
+    @media (min-width: 500px) {
+      .phone-form {
+        flex-direction: row;
+      }
+    }
+
+    .phone-input-wrapper {
+      position: relative;
+      flex: 1;
+    }
+
+    .phone-input {
+      width: 100%;
+      padding: 1rem 1rem 1rem 3rem;
+      font-size: 1.125rem;
+      font-family: var(--font-body);
+      border: 2px solid var(--cream-dark);
+      border-radius: 12px;
+      background: white;
+      color: var(--charcoal);
+      transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
+    }
+
+    .phone-input:focus {
+      outline: none;
+      border-color: var(--terracotta);
+      box-shadow: 0 0 0 4px rgba(199, 91, 57, 0.1);
+    }
+
+    .phone-input::placeholder {
+      color: var(--warm-gray);
+    }
+
+    .phone-prefix {
+      position: absolute;
+      left: 1rem;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--charcoal);
+      font-size: 1.125rem;
+      pointer-events: none;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      padding: 1rem 1.75rem;
+      font-size: 1rem;
+      font-weight: 600;
+      font-family: var(--font-body);
+      text-decoration: none;
+      border-radius: 12px;
+      border: none;
+      cursor: pointer;
+      transition: all var(--transition-fast);
+      white-space: nowrap;
+    }
+
+    .btn-primary {
+      background: var(--terracotta);
+      color: white;
+    }
+
+    .btn-primary:hover {
+      background: var(--terracotta-dark);
+      transform: translateY(-1px);
+    }
+
+    .btn-primary:active {
+      transform: translateY(0);
+    }
+
+    .cta-divider {
+      display: flex;
+      align-items: center;
+      gap: var(--space-sm);
+      color: var(--warm-gray);
+      font-size: 0.875rem;
+    }
+
+    .cta-divider::before,
+    .cta-divider::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--cream-dark);
+    }
+
+    .text-us {
+      text-align: center;
+    }
+
+    .text-us p {
+      color: var(--charcoal-light);
+      margin-bottom: 0.5rem;
+    }
+
+    .phone-number {
+      font-family: var(--font-display);
+      font-size: 1.5rem;
+      font-weight: 600;
+      color: var(--terracotta);
+      text-decoration: none;
+      letter-spacing: 0.02em;
+    }
+
+    .phone-number:hover {
+      color: var(--terracotta-dark);
+    }
+
+    /* ===== Phone Mockup ===== */
+    .phone-mockup-wrapper {
+      display: flex;
+      justify-content: center;
+      padding: var(--space-md);
+    }
+
+    .phone-mockup {
+      width: 280px;
+      background: #1C1C1E;
+      border-radius: 40px;
+      padding: 12px;
+      box-shadow:
+        0 50px 100px -20px rgba(45, 42, 38, 0.25),
+        0 30px 60px -30px rgba(45, 42, 38, 0.3),
+        inset 0 0 0 2px rgba(255, 255, 255, 0.1);
+    }
+
+    .phone-screen {
+      background: #F2F2F7;
+      border-radius: 30px;
+      overflow: hidden;
+      aspect-ratio: 9 / 16;
+    }
+
+    .phone-status-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 12px 24px 8px;
+      font-size: 12px;
+      font-weight: 600;
+      color: #1C1C1E;
+    }
+
+    .phone-notch {
+      width: 80px;
+      height: 24px;
+      background: #1C1C1E;
+      border-radius: 12px;
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      top: 12px;
+    }
+
+    .sms-header {
+      background: #F2F2F7;
+      padding: 8px 16px 12px;
+      text-align: center;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+    }
+
+    .sms-contact {
+      font-size: 11px;
+      color: #8E8E93;
+      margin-bottom: 2px;
+    }
+
+    .sms-name {
+      font-size: 15px;
+      font-weight: 600;
+      color: #1C1C1E;
+    }
+
+    .sms-conversation {
+      padding: 12px 12px 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      height: calc(100% - 90px);
+      overflow-y: auto;
+    }
+
+    .sms-bubble {
+      max-width: 85%;
+      padding: 10px 14px;
+      border-radius: 18px;
+      font-size: 14px;
+      line-height: 1.4;
+      opacity: 0;
+      transform: translateY(10px);
+      transition: opacity 0.4s ease, transform 0.4s ease;
+    }
+
+    .sms-bubble.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .sms-bubble.sent {
+      background: #007AFF;
+      color: white;
+      align-self: flex-end;
+      border-bottom-right-radius: 4px;
+    }
+
+    .sms-bubble.received {
+      background: #E9E9EB;
+      color: #1C1C1E;
+      align-self: flex-start;
+      border-bottom-left-radius: 4px;
+    }
+
+    .sms-bubble a {
+      color: inherit;
+      text-decoration: underline;
+    }
+
+    .sms-bubble.sent a {
+      color: white;
+    }
+
+    .sms-time {
+      font-size: 10px;
+      color: #8E8E93;
+      text-align: center;
+      padding: 8px 0;
+    }
+
+    .typing-indicator {
+      display: flex;
+      gap: 4px;
+      padding: 12px 14px;
+      background: #E9E9EB;
+      border-radius: 18px;
+      border-bottom-left-radius: 4px;
+      width: fit-content;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .typing-indicator.visible {
+      opacity: 1;
+    }
+
+    .typing-indicator span {
+      width: 6px;
+      height: 6px;
+      background: #8E8E93;
+      border-radius: 50%;
+      animation: typing 1.4s infinite;
+    }
+
+    .typing-indicator span:nth-child(2) {
+      animation-delay: 0.2s;
+    }
+
+    .typing-indicator span:nth-child(3) {
+      animation-delay: 0.4s;
+    }
+
+    @keyframes typing {
+      0%, 60%, 100% { transform: translateY(0); }
+      30% { transform: translateY(-4px); }
+    }
+
+    /* ===== Conversation Section ===== */
+    .conversation-section {
+      background: var(--cream-dark);
+      padding: var(--space-2xl) 0;
+    }
+
+    .conversation-section h2 {
+      text-align: center;
+      margin-bottom: var(--space-sm);
+    }
+
+    .conversation-intro {
+      text-align: center;
+      color: var(--charcoal-light);
+      margin-bottom: var(--space-xl);
+      max-width: 50ch;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .full-conversation {
+      max-width: 380px;
+      margin: 0 auto;
+      background: white;
+      border-radius: 24px;
+      padding: var(--space-md);
+      box-shadow: 0 4px 24px rgba(45, 42, 38, 0.08);
+    }
+
+    .full-conversation .sms-bubble {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+
+    .full-conversation .sms-bubble.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .meal-plan-card {
+      background: var(--butter);
+      border-radius: 12px;
+      padding: 12px;
+      margin-top: 8px;
+    }
+
+    .meal-plan-card h4 {
+      font-family: var(--font-display);
+      font-size: 13px;
+      font-weight: 600;
+      margin-bottom: 8px;
+      color: var(--charcoal);
+    }
+
+    .meal-plan-card ul {
+      list-style: none;
+      font-size: 13px;
+      line-height: 1.5;
+    }
+
+    .meal-plan-card li {
+      padding: 4px 0;
+      border-bottom: 1px solid rgba(45, 42, 38, 0.1);
+    }
+
+    .meal-plan-card li:last-child {
+      border-bottom: none;
+    }
+
+    /* ===== How It Works ===== */
+    .how-it-works {
+      padding: var(--space-2xl) 0;
+    }
+
+    .how-it-works h2 {
+      text-align: center;
+      margin-bottom: var(--space-xl);
+    }
+
+    .steps {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: var(--space-lg);
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    .step {
+      text-align: center;
+      padding: var(--space-md);
+    }
+
+    .step-number {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 3rem;
+      height: 3rem;
+      background: var(--terracotta);
+      color: white;
+      font-family: var(--font-display);
+      font-size: 1.25rem;
+      font-weight: 600;
+      border-radius: 50%;
+      margin-bottom: var(--space-sm);
+    }
+
+    .step h3 {
+      margin-bottom: 0.5rem;
+      color: var(--charcoal);
+    }
+
+    .step p {
+      color: var(--charcoal-light);
+      font-size: 0.9375rem;
+      margin: 0 auto;
+    }
+
+    /* ===== Pricing ===== */
+    .pricing {
+      background: var(--charcoal);
+      color: var(--cream);
+      padding: var(--space-2xl) 0;
+      text-align: center;
+    }
+
+    .pricing h2 {
+      margin-bottom: var(--space-md);
+    }
+
+    .price-tag {
+      font-family: var(--font-display);
+      font-size: clamp(2rem, 6vw, 3rem);
+      font-weight: 700;
+      color: var(--terracotta-light);
+      margin-bottom: var(--space-sm);
+    }
+
+    .price-details {
+      color: rgba(253, 246, 233, 0.7);
+      margin-bottom: var(--space-lg);
+    }
+
+    .pricing-features {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: var(--space-sm) var(--space-lg);
+      margin-bottom: var(--space-lg);
+    }
+
+    .pricing-feature {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.9375rem;
+      color: rgba(253, 246, 233, 0.8);
+    }
+
+    .pricing-feature svg {
+      width: 1.25rem;
+      height: 1.25rem;
+      fill: var(--terracotta-light);
+    }
+
+    .pricing .btn-primary {
+      background: var(--terracotta-light);
+    }
+
+    .pricing .btn-primary:hover {
+      background: var(--terracotta);
+    }
+
+    /* ===== FAQ ===== */
+    .faq {
+      padding: var(--space-2xl) 0;
+    }
+
+    .faq h2 {
+      text-align: center;
+      margin-bottom: var(--space-xl);
+    }
+
+    .faq-list {
+      max-width: 700px;
+      margin: 0 auto;
+    }
+
+    .faq-item {
+      border-bottom: 1px solid var(--cream-dark);
+    }
+
+    .faq-question {
+      width: 100%;
+      background: none;
+      border: none;
+      padding: var(--space-md) 0;
+      font-family: var(--font-body);
+      font-size: 1.0625rem;
+      font-weight: 500;
+      color: var(--charcoal);
+      text-align: left;
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: var(--space-sm);
+    }
+
+    .faq-question:hover {
+      color: var(--terracotta);
+    }
+
+    .faq-question svg {
+      width: 1.25rem;
+      height: 1.25rem;
+      fill: currentColor;
+      transition: transform var(--transition-fast);
+      flex-shrink: 0;
+    }
+
+    .faq-item.open .faq-question svg {
+      transform: rotate(180deg);
+    }
+
+    .faq-answer {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height var(--transition-medium);
+    }
+
+    .faq-item.open .faq-answer {
+      max-height: 300px;
+    }
+
+    .faq-answer p {
+      padding-bottom: var(--space-md);
+      color: var(--charcoal-light);
+      line-height: 1.7;
+    }
+
+    /* ===== Footer ===== */
+    footer {
+      background: var(--cream-dark);
+      padding: var(--space-xl) 0 var(--space-lg);
+      text-align: center;
+    }
+
+    .footer-cta {
+      margin-bottom: var(--space-lg);
+    }
+
+    .footer-cta p {
+      margin: 0 auto var(--space-sm);
+      font-size: 1.125rem;
+      color: var(--charcoal);
+    }
+
+    .footer-links {
+      display: flex;
+      justify-content: center;
+      gap: var(--space-lg);
+      margin-bottom: var(--space-md);
+    }
+
+    .footer-links a {
+      color: var(--warm-gray);
+      text-decoration: none;
+      font-size: 0.875rem;
+    }
+
+    .footer-links a:hover {
+      color: var(--terracotta);
+    }
+
+    .footer-copy {
+      color: var(--warm-gray);
+      font-size: 0.8125rem;
+    }
+
+    /* ===== Success State ===== */
+    .form-success {
+      display: none;
+      text-align: center;
+      padding: var(--space-md);
+      background: rgba(199, 91, 57, 0.1);
+      border-radius: 12px;
+      border: 2px solid var(--terracotta);
+    }
+
+    .form-success.visible {
+      display: block;
+      animation: fadeIn 0.3s ease;
+    }
+
+    .form-success h3 {
+      color: var(--terracotta);
+      margin-bottom: 0.5rem;
+    }
+
+    .form-success p {
+      color: var(--charcoal-light);
+      margin: 0 auto;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(-10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ===== Form Error ===== */
+    .form-error {
+      color: #C73939;
+      font-size: 0.875rem;
+      margin-top: 0.5rem;
+      display: none;
+    }
+
+    .form-error.visible {
+      display: block;
+    }
+
+    /* ===== Utilities ===== */
+    .visually-hidden {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
+    }
+  </style>
+</head>
+<body>
+  <!-- Header -->
+  <header>
+    <div class="container">
+      <a href="/" class="logo">
+        <span class="logo-mark">
+          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path d="M12 3C7.03 3 3 7.03 3 12c0 2.76 1.24 5.22 3.19 6.87L5 21l2.13-1.19C8.75 20.57 10.33 21 12 21c4.97 0 9-4.03 9-9s-4.03-9-9-9zm-1 14h-2v-2h2v2zm0-4h-2V7h2v6z"/>
+          </svg>
+        </span>
+        Weeknight
+      </a>
+    </div>
+  </header>
+
+  <main>
+    <!-- Hero Section -->
+    <section class="hero">
+      <div class="container">
+        <div class="hero-content">
+          <div class="hero-text">
+            <h1 class="hero-headline">"What's for <em>dinner?</em>"</h1>
+            <p class="hero-subhead">Three words. Every evening. A tiny question that steals hours. We plan your week, build your cart, and get out of the way.</p>
+
+            <div class="cta-group">
+              <form class="phone-form" id="signupForm">
+                <div class="phone-input-wrapper">
+                  <span class="phone-prefix">+1</span>
+                  <input
+                    type="tel"
+                    class="phone-input"
+                    id="phoneInput"
+                    placeholder="(555) 123-4567"
+                    autocomplete="tel"
+                    aria-label="Your phone number"
+                  >
+                </div>
+                <button type="submit" class="btn btn-primary">Get your first text</button>
+              </form>
+              <p class="form-error" id="formError">Please enter a valid phone number</p>
+
+              <div class="form-success" id="formSuccess">
+                <h3>Check your phone!</h3>
+                <p>We just sent your first text. Let's plan some meals.</p>
+              </div>
+
+              <div class="cta-divider">or</div>
+
+              <div class="text-us">
+                <p>Text us directly at</p>
+                <a href="sms:+15558675309" class="phone-number">(555) 867-5309</a>
+              </div>
+            </div>
+          </div>
+
+          <div class="phone-mockup-wrapper">
+            <div class="phone-mockup">
+              <div class="phone-screen">
+                <div class="phone-status-bar">
+                  <span>9:41</span>
+                  <span>5G</span>
+                </div>
+                <div class="sms-header">
+                  <div class="sms-contact">Text Message</div>
+                  <div class="sms-name">Weeknight</div>
+                </div>
+                <div class="sms-conversation" id="heroConversation">
+                  <div class="sms-time">Today 5:32 PM</div>
+                  <div class="sms-bubble received" data-delay="0">Hey! Ready to plan your week? How many dinners do you need?</div>
+                  <div class="sms-bubble sent" data-delay="800">4 dinners this week</div>
+                  <div class="sms-bubble received" data-delay="1600">Perfect. Any ingredients you want to use up?</div>
+                  <div class="sms-bubble sent" data-delay="2400">Got some chicken thighs</div>
+                  <div class="sms-bubble received" data-delay="3200">Nice. Your plan is ready!</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Full Conversation Demo -->
+    <section class="conversation-section" id="conversationDemo">
+      <div class="container">
+        <h2>See how it works</h2>
+        <p class="conversation-intro">A real conversation from last Tuesday. From "we need food" to a full cart in under a minute.</p>
+
+        <div class="full-conversation">
+          <div class="sms-time">Tuesday 5:47 PM</div>
+
+          <div class="sms-bubble sent" data-delay="0">We need meals for the week, family of 4</div>
+
+          <div class="sms-bubble received" data-delay="400">Got it! Quick question—any dietary restrictions or picky eaters?</div>
+
+          <div class="sms-bubble sent" data-delay="800">Daughter won't eat fish, otherwise we're easy</div>
+
+          <div class="sms-bubble received" data-delay="1200">Perfect. Here's your plan for the week:</div>
+
+          <div class="sms-bubble received" data-delay="1600">
+            <div class="meal-plan-card">
+              <h4>Your Meal Plan</h4>
+              <ul>
+                <li><strong>Mon:</strong> Sheet Pan Chicken Thighs with Lemony Potatoes</li>
+                <li><strong>Tue:</strong> Crispy Pork Cutlets with Cabbage Slaw</li>
+                <li><strong>Wed:</strong> Creamy Tomato Pasta with Spinach</li>
+                <li><strong>Thu:</strong> Korean Beef Bowls with Pickled Veggies</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="sms-bubble received" data-delay="2000">All from What to Cook this week. Want me to build your Kroger cart?</div>
+
+          <div class="sms-bubble sent" data-delay="2400">Yes please</div>
+
+          <div class="sms-bubble received" data-delay="2800">Done! Your cart is ready with 23 items. <a href="#">Open in Kroger →</a></div>
+
+          <div class="sms-bubble received" data-delay="3200">Enjoy your week! Text me anytime if you need to swap a meal.</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- How It Works -->
+    <section class="how-it-works">
+      <div class="container">
+        <h2>Three texts to dinner</h2>
+
+        <div class="steps">
+          <div class="step">
+            <div class="step-number">1</div>
+            <h3>Text your preferences</h3>
+            <p>Tell us how many meals, what you like, what you've got on hand. No app to download.</p>
+          </div>
+
+          <div class="step">
+            <div class="step-number">2</div>
+            <h3>Get your plan</h3>
+            <p>We pull from the best cooking newsletters and build a plan that actually fits your week.</p>
+          </div>
+
+          <div class="step">
+            <div class="step-number">3</div>
+            <h3>Cart ready, you're done</h3>
+            <p>One tap to your Kroger cart with everything you need. Schedule delivery and cook.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Pricing -->
+    <section class="pricing">
+      <div class="container">
+        <h2>Simple pricing</h2>
+        <div class="price-tag">$1 for your first week</div>
+        <p class="price-details">Then $5/week. That's it.</p>
+
+        <div class="pricing-features">
+          <span class="pricing-feature">
+            <svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"/></svg>
+            Cancel by text
+          </span>
+          <span class="pricing-feature">
+            <svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"/></svg>
+            Pause anytime
+          </span>
+          <span class="pricing-feature">
+            <svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"/></svg>
+            No commitment
+          </span>
+        </div>
+
+        <a href="#" class="btn btn-primary" onclick="document.getElementById('phoneInput').focus(); return false;">Start your trial</a>
+      </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="faq">
+      <div class="container">
+        <h2>Questions</h2>
+
+        <div class="faq-list">
+          <div class="faq-item">
+            <button class="faq-question">
+              Where do the recipes come from?
+              <svg viewBox="0 0 24 24"><path d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6 1.41-1.41z"/></svg>
+            </button>
+            <div class="faq-answer">
+              <p>We curate from the best cooking newsletters—What to Cook, NYT Cooking, Serious Eats—so you get tested, seasonal recipes. No random blog posts with 2000-word backstories.</p>
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <button class="faq-question">
+              What if I don't use Kroger?
+              <svg viewBox="0 0 24 24"><path d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6 1.41-1.41z"/></svg>
+            </button>
+            <div class="faq-answer">
+              <p>Kroger-owned stores include Ralphs, Fred Meyer, King Soopers, and more. We're adding Instacart support soon, which will open up most grocery stores. Text us to get on the waitlist.</p>
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <button class="faq-question">
+              Can I swap meals or add my own recipes?
+              <svg viewBox="0 0 24 24"><path d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6 1.41-1.41z"/></svg>
+            </button>
+            <div class="faq-answer">
+              <p>Absolutely. Just text us "swap Monday" or send us a recipe link and we'll rebuild your cart. It's a conversation, not a rigid system.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container">
+      <div class="footer-cta">
+        <p>Ready to reclaim your evenings?</p>
+        <a href="sms:+15558675309" class="phone-number">(555) 867-5309</a>
+      </div>
+
+      <div class="footer-links">
+        <a href="#">Privacy</a>
+        <a href="#">Terms</a>
+        <a href="mailto:hello@weeknight.app">Contact</a>
+      </div>
+
+      <p class="footer-copy">&copy; 2025 Weeknight. Made for busy kitchens.</p>
+    </div>
+  </footer>
+
+  <script>
+    // ===== Phone Number Formatting =====
+    const phoneInput = document.getElementById('phoneInput');
+
+    phoneInput.addEventListener('input', (e) => {
+      let value = e.target.value.replace(/\D/g, '');
+
+      // Limit to 10 digits
+      value = value.substring(0, 10);
+
+      // Format as (XXX) XXX-XXXX
+      if (value.length > 6) {
+        value = `(${value.slice(0, 3)}) ${value.slice(3, 6)}-${value.slice(6)}`;
+      } else if (value.length > 3) {
+        value = `(${value.slice(0, 3)}) ${value.slice(3)}`;
+      } else if (value.length > 0) {
+        value = `(${value}`;
+      }
+
+      e.target.value = value;
+    });
+
+    // ===== Form Submission =====
+    const signupForm = document.getElementById('signupForm');
+    const formError = document.getElementById('formError');
+    const formSuccess = document.getElementById('formSuccess');
+
+    signupForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      const phone = phoneInput.value.replace(/\D/g, '');
+
+      // Validate phone number (10 digits)
+      if (phone.length !== 10) {
+        formError.classList.add('visible');
+        phoneInput.focus();
+        return;
+      }
+
+      formError.classList.remove('visible');
+
+      // For now, just log the phone number
+      // TODO: Wire to actual API endpoint
+      console.log('Phone number submitted:', `+1${phone}`);
+
+      // Show success state
+      signupForm.style.display = 'none';
+      document.querySelector('.cta-divider').style.display = 'none';
+      document.querySelector('.text-us').style.display = 'none';
+      formSuccess.classList.add('visible');
+    });
+
+    // ===== Scroll Animation for SMS Bubbles =====
+    const observerOptions = {
+      threshold: 0.2,
+      rootMargin: '0px 0px -50px 0px'
+    };
+
+    // Hero conversation - animate on load
+    function animateHeroConversation() {
+      const bubbles = document.querySelectorAll('#heroConversation .sms-bubble');
+      bubbles.forEach((bubble, index) => {
+        const delay = parseInt(bubble.dataset.delay) || (index * 600);
+        setTimeout(() => {
+          bubble.classList.add('visible');
+        }, delay + 500); // Start after page load
+      });
+    }
+
+    // Full conversation - animate on scroll
+    const conversationObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const bubbles = entry.target.querySelectorAll('.sms-bubble');
+          bubbles.forEach((bubble, index) => {
+            const delay = parseInt(bubble.dataset.delay) || (index * 400);
+            setTimeout(() => {
+              bubble.classList.add('visible');
+            }, delay);
+          });
+          conversationObserver.unobserve(entry.target);
+        }
+      });
+    }, observerOptions);
+
+    const fullConversation = document.querySelector('.full-conversation');
+    if (fullConversation) {
+      conversationObserver.observe(fullConversation);
+    }
+
+    // Start hero animation
+    animateHeroConversation();
+
+    // ===== FAQ Accordion =====
+    const faqItems = document.querySelectorAll('.faq-item');
+
+    faqItems.forEach(item => {
+      const question = item.querySelector('.faq-question');
+
+      question.addEventListener('click', () => {
+        const wasOpen = item.classList.contains('open');
+
+        // Close all items
+        faqItems.forEach(i => i.classList.remove('open'));
+
+        // Open clicked item if it wasn't already open
+        if (!wasOpen) {
+          item.classList.add('open');
+        }
+      });
+    });
+  </script>
+</body>
+</html>
