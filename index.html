@@ -311,6 +311,12 @@
       color: var(--terracotta-dark);
     }
 
+    .cta-note {
+      font-size: 0.875rem;
+      color: var(--warm-gray);
+      margin-top: 0.5rem;
+    }
+
     /* ===== Phone Mockup ===== */
     .phone-mockup-wrapper {
       display: flex;
@@ -844,6 +850,7 @@
                 <button type="submit" class="btn btn-primary">Get your first text</button>
               </form>
               <p class="form-error" id="formError">Please enter a valid phone number</p>
+              <p class="cta-note">We learn your preferences as we go—no app, no forms.</p>
 
               <div class="form-success" id="formSuccess">
                 <h3>Check your phone!</h3>
@@ -894,33 +901,35 @@
         <div class="full-conversation">
           <div class="sms-time">Tuesday 5:47 PM</div>
 
-          <div class="sms-bubble sent" data-delay="0">We need meals for the week, family of 4</div>
+          <div class="sms-bubble received" data-delay="0">Hey! How'd last week's meals turn out? Any hits or misses?</div>
 
-          <div class="sms-bubble received" data-delay="400">Got it! Quick question—any dietary restrictions or picky eaters?</div>
+          <div class="sms-bubble sent" data-delay="400">The chicken thighs were great, pork cutlets were meh</div>
 
-          <div class="sms-bubble sent" data-delay="800">Daughter won't eat fish, otherwise we're easy</div>
+          <div class="sms-bubble received" data-delay="800">Noted—I'll skip cutlet-style recipes for a while. Ready for this week? Still family of 4, no fish for Emma?</div>
 
-          <div class="sms-bubble received" data-delay="1200">Perfect. Here's your plan for the week:</div>
+          <div class="sms-bubble sent" data-delay="1200">Yep, and we're trying to eat less meat this month</div>
 
-          <div class="sms-bubble received" data-delay="1600">
+          <div class="sms-bubble received" data-delay="1600">Got it. Here's your plan:</div>
+
+          <div class="sms-bubble received" data-delay="2000">
             <div class="meal-plan-card">
               <h4>Your Meal Plan</h4>
               <ul>
-                <li><strong>Mon:</strong> Sheet Pan Chicken Thighs with Lemony Potatoes</li>
-                <li><strong>Tue:</strong> Crispy Pork Cutlets with Cabbage Slaw</li>
-                <li><strong>Wed:</strong> Creamy Tomato Pasta with Spinach</li>
+                <li><strong>Mon:</strong> Crispy Chickpea Bowls with Tahini Sauce</li>
+                <li><strong>Tue:</strong> Sheet Pan Chicken Thighs with Lemony Potatoes</li>
+                <li><strong>Wed:</strong> Creamy Tomato Pasta with Burrata</li>
                 <li><strong>Thu:</strong> Korean Beef Bowls with Pickled Veggies</li>
               </ul>
             </div>
           </div>
 
-          <div class="sms-bubble received" data-delay="2000">All from What to Cook this week. Want me to build your Kroger cart?</div>
+          <div class="sms-bubble received" data-delay="2400">Two meatless nights this week. Want me to build your Kroger cart?</div>
 
-          <div class="sms-bubble sent" data-delay="2400">Yes please</div>
+          <div class="sms-bubble sent" data-delay="2800">Yes please</div>
 
-          <div class="sms-bubble received" data-delay="2800">Done! Your cart is ready with 23 items. <a href="#">Open in Kroger →</a></div>
+          <div class="sms-bubble received" data-delay="3200">Done! Your cart is ready with 23 items. <a href="#">Open in Kroger →</a></div>
 
-          <div class="sms-bubble received" data-delay="3200">Enjoy your week! Text me anytime if you need to swap a meal.</div>
+          <div class="sms-bubble received" data-delay="3600">Enjoy your week! I'll check in next Tuesday.</div>
         </div>
       </div>
     </section>
@@ -934,7 +943,7 @@
           <div class="step">
             <div class="step-number">1</div>
             <h3>Text your preferences</h3>
-            <p>Tell us how many meals, what you like, what you've got on hand. No app to download.</p>
+            <p>Tell us what you like, what you don't. We remember and get better each week.</p>
           </div>
 
           <div class="step">
