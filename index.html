@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Weeknight — Meal planning that actually works</title>
+  <title>Weeknight — Dinner planning that actually works</title>
   <meta name="description" content="Text us your preferences, get a personalized meal plan, and your grocery cart built automatically. $1 for your first week.">
 
   <!-- Open Graph -->
@@ -28,6 +28,7 @@
   <!-- Preload fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preload" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600&display=swap" as="style">
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 
   <!-- Favicon -->
@@ -144,6 +145,12 @@
       display: inline-flex;
       align-items: center;
       gap: 0.5rem;
+      border-radius: 8px;
+    }
+
+    .logo:focus-visible {
+      outline: none;
+      box-shadow: 0 0 0 3px var(--cream), 0 0 0 5px var(--terracotta);
     }
 
     .logo-mark {
@@ -277,8 +284,9 @@
       border-radius: 12px;
       border: none;
       cursor: pointer;
-      transition: all var(--transition-fast);
+      transition: background-color var(--transition-fast), transform var(--transition-fast), box-shadow var(--transition-fast);
       white-space: nowrap;
+      touch-action: manipulation;
     }
 
     .btn-primary {
@@ -293,6 +301,15 @@
 
     .btn-primary:active {
       transform: translateY(0);
+    }
+
+    .btn:focus-visible {
+      outline: none;
+      box-shadow: 0 0 0 3px var(--cream), 0 0 0 5px var(--terracotta);
+    }
+
+    .pricing .btn:focus-visible {
+      box-shadow: 0 0 0 3px var(--charcoal), 0 0 0 5px var(--terracotta-light);
     }
 
     .cta-divider {
@@ -327,10 +344,17 @@
       color: var(--terracotta);
       text-decoration: none;
       letter-spacing: 0.02em;
+      touch-action: manipulation;
     }
 
     .phone-number:hover {
       color: var(--terracotta-dark);
+    }
+
+    .phone-number:focus-visible {
+      outline: none;
+      box-shadow: 0 0 0 3px var(--cream), 0 0 0 5px var(--terracotta);
+      border-radius: 4px;
     }
 
     .cta-note {
@@ -711,10 +735,17 @@
       justify-content: space-between;
       align-items: center;
       gap: var(--space-sm);
+      touch-action: manipulation;
     }
 
     .faq-question:hover {
       color: var(--terracotta);
+    }
+
+    .faq-question:focus-visible {
+      outline: none;
+      box-shadow: 0 0 0 3px var(--cream), 0 0 0 5px var(--terracotta);
+      border-radius: 4px;
     }
 
     .faq-question svg {
@@ -779,6 +810,12 @@
       color: var(--terracotta);
     }
 
+    .footer-links a:focus-visible {
+      outline: none;
+      box-shadow: 0 0 0 3px var(--cream-dark), 0 0 0 5px var(--terracotta);
+      border-radius: 4px;
+    }
+
     .footer-copy {
       color: var(--warm-gray);
       font-size: 0.8125rem;
@@ -838,9 +875,62 @@
       white-space: nowrap;
       border: 0;
     }
+
+    /* ===== Skip Link ===== */
+    .skip-link {
+      position: absolute;
+      top: -100px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: var(--terracotta);
+      color: white;
+      padding: 0.75rem 1.5rem;
+      border-radius: 0 0 8px 8px;
+      font-weight: 600;
+      text-decoration: none;
+      z-index: 1000;
+      transition: top var(--transition-fast);
+    }
+
+    .skip-link:focus {
+      top: 0;
+      outline: none;
+    }
+
+    /* ===== Reduced Motion ===== */
+    @media (prefers-reduced-motion: reduce) {
+      html {
+        scroll-behavior: auto;
+      }
+
+      .sms-bubble,
+      .full-conversation .sms-bubble,
+      .typing-indicator span,
+      .faq-question svg,
+      .faq-answer,
+      .btn,
+      .phone-input,
+      .skip-link,
+      .form-success {
+        transition: none;
+        animation: none;
+      }
+
+      .sms-bubble {
+        opacity: 1;
+        transform: none;
+      }
+
+      .full-conversation .sms-bubble {
+        opacity: 1;
+        transform: none;
+      }
+    }
   </style>
 </head>
 <body>
+  <a href="#main-content" class="skip-link">Skip to content</a>
+
   <!-- Header -->
   <header>
     <div class="container">
@@ -856,7 +946,7 @@
     </div>
   </header>
 
-  <main>
+  <main id="main-content">
     <!-- Hero Section -->
     <section class="hero">
       <div class="container">
@@ -873,14 +963,16 @@
                     type="tel"
                     class="phone-input"
                     id="phoneInput"
-                    placeholder="(555) 123-4567"
+                    name="phone"
+                    placeholder="(555) 123-4567..."
                     autocomplete="tel"
                     aria-label="Your phone number"
+                    aria-describedby="formError"
                   >
                 </div>
                 <button type="submit" class="btn btn-primary">Get your first text</button>
               </form>
-              <p class="form-error" id="formError">Please enter a valid phone number</p>
+              <p class="form-error" id="formError" role="alert" aria-live="polite">Please enter a valid phone number</p>
               <p class="cta-note">We ask how it went, remember what works, and adapt when life changes.</p>
 
               <div class="form-success" id="formSuccess">
@@ -994,15 +1086,15 @@
 
         <div class="pricing-features">
           <span class="pricing-feature">
-            <svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"/></svg>
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"/></svg>
             Cancel by text
           </span>
           <span class="pricing-feature">
-            <svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"/></svg>
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"/></svg>
             Pause anytime
           </span>
           <span class="pricing-feature">
-            <svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"/></svg>
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"/></svg>
             No commitment
           </span>
         </div>
@@ -1018,32 +1110,32 @@
 
         <div class="faq-list">
           <div class="faq-item">
-            <button class="faq-question">
+            <button class="faq-question" aria-expanded="false" aria-controls="faq-answer-1">
               Where do the recipes come from?
-              <svg viewBox="0 0 24 24"><path d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6 1.41-1.41z"/></svg>
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6 1.41-1.41z"/></svg>
             </button>
-            <div class="faq-answer">
+            <div class="faq-answer" id="faq-answer-1">
               <p>We curate from the best cooking newsletters—What to Cook, NYT Cooking, Serious Eats—so you get tested, seasonal recipes. No random blog posts with 2000-word backstories.</p>
             </div>
           </div>
 
           <div class="faq-item">
-            <button class="faq-question">
+            <button class="faq-question" aria-expanded="false" aria-controls="faq-answer-2">
               What if I don't use Kroger?
-              <svg viewBox="0 0 24 24"><path d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6 1.41-1.41z"/></svg>
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6 1.41-1.41z"/></svg>
             </button>
-            <div class="faq-answer">
+            <div class="faq-answer" id="faq-answer-2">
               <p>Kroger-owned stores include Ralphs, Fred Meyer, King Soopers, and more. We're adding Instacart support soon, which will open up most grocery stores. Text us to get on the waitlist.</p>
             </div>
           </div>
 
           <div class="faq-item">
-            <button class="faq-question">
+            <button class="faq-question" aria-expanded="false" aria-controls="faq-answer-3">
               Can I swap meals or add my own recipes?
-              <svg viewBox="0 0 24 24"><path d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6 1.41-1.41z"/></svg>
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6 1.41-1.41z"/></svg>
             </button>
-            <div class="faq-answer">
-              <p>Absolutely. Just text us "swap Monday" or send us a recipe link and we'll rebuild your cart. It's a conversation, not a rigid system.</p>
+            <div class="faq-answer" id="faq-answer-3">
+              <p>Absolutely. Just text us &ldquo;swap Monday&rdquo; or send us a recipe link and we'll rebuild your cart. It's a conversation, not a rigid system.</p>
             </div>
           </div>
         </div>
@@ -1104,11 +1196,13 @@
       // Validate phone number (10 digits)
       if (phone.length !== 10) {
         formError.classList.add('visible');
+        phoneInput.setAttribute('aria-invalid', 'true');
         phoneInput.focus();
         return;
       }
 
       formError.classList.remove('visible');
+      phoneInput.removeAttribute('aria-invalid');
 
       // For now, just log the phone number
       // TODO: Wire to actual API endpoint
@@ -1171,12 +1265,16 @@
       question.addEventListener('click', () => {
         const wasOpen = item.classList.contains('open');
 
-        // Close all items
-        faqItems.forEach(i => i.classList.remove('open'));
+        // Close all items and reset aria-expanded
+        faqItems.forEach(i => {
+          i.classList.remove('open');
+          i.querySelector('.faq-question').setAttribute('aria-expanded', 'false');
+        });
 
         // Open clicked item if it wasn't already open
         if (!wasOpen) {
           item.classList.add('open');
+          question.setAttribute('aria-expanded', 'true');
         }
       });
     });
