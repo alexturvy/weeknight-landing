@@ -325,42 +325,45 @@
     }
 
     .phone-mockup {
-      width: 280px;
+      width: 260px;
       background: #1C1C1E;
-      border-radius: 40px;
-      padding: 12px;
+      border-radius: 44px;
+      padding: 10px;
       box-shadow:
         0 50px 100px -20px rgba(45, 42, 38, 0.25),
         0 30px 60px -30px rgba(45, 42, 38, 0.3),
         inset 0 0 0 2px rgba(255, 255, 255, 0.1);
+      position: relative;
     }
 
     .phone-screen {
       background: #F2F2F7;
-      border-radius: 30px;
+      border-radius: 36px;
       overflow: hidden;
-      aspect-ratio: 9 / 16;
+      aspect-ratio: 9 / 19.5;
+      position: relative;
     }
 
     .phone-status-bar {
       display: flex;
       justify-content: space-between;
-      align-items: center;
-      padding: 12px 24px 8px;
-      font-size: 12px;
+      align-items: flex-end;
+      padding: 14px 28px 8px;
+      font-size: 11px;
       font-weight: 600;
       color: #1C1C1E;
+      position: relative;
     }
 
-    .phone-notch {
-      width: 80px;
-      height: 24px;
+    .phone-dynamic-island {
+      width: 90px;
+      height: 28px;
       background: #1C1C1E;
-      border-radius: 12px;
+      border-radius: 20px;
       position: absolute;
       left: 50%;
       transform: translateX(-50%);
-      top: 12px;
+      top: 10px;
     }
 
     .sms-header {
@@ -392,7 +395,7 @@
     }
 
     .sms-bubble {
-      max-width: 85%;
+      max-width: 75%;
       padding: 10px 14px;
       border-radius: 18px;
       font-size: 14px;
@@ -411,6 +414,7 @@
       background: #007AFF;
       color: white;
       align-self: flex-end;
+      margin-left: 20%;
       border-bottom-right-radius: 4px;
     }
 
@@ -418,6 +422,7 @@
       background: #E9E9EB;
       color: #1C1C1E;
       align-self: flex-start;
+      margin-right: 20%;
       border-bottom-left-radius: 4px;
     }
 
@@ -831,8 +836,8 @@
       <div class="container">
         <div class="hero-content">
           <div class="hero-text">
-            <h1 class="hero-headline">"What's for <em>dinner?</em>"</h1>
-            <p class="hero-subhead">Three words. Every evening. A tiny question that steals hours. We plan your week, build your cart, and get out of the way.</p>
+            <h1 class="hero-headline">Dinner has to happen whether you plan for it or not.</h1>
+            <p class="hero-subhead">We handle the planning and the shopping. You just cook.</p>
 
             <div class="cta-group">
               <form class="phone-form" id="signupForm">
@@ -850,7 +855,7 @@
                 <button type="submit" class="btn btn-primary">Get your first text</button>
               </form>
               <p class="form-error" id="formError">Please enter a valid phone number</p>
-              <p class="cta-note">We learn your preferences as we go—no app, no forms.</p>
+              <p class="cta-note">We ask how it went, remember what works, and adapt when life changes.</p>
 
               <div class="form-success" id="formSuccess">
                 <h3>Check your phone!</h3>
@@ -861,7 +866,7 @@
 
               <div class="text-us">
                 <p>Text us directly at</p>
-                <a href="sms:+15558675309" class="phone-number">(555) 867-5309</a>
+                <a href="sms:+19086766325" class="phone-number">(908) 676-MEAL</a>
               </div>
             </div>
           </div>
@@ -869,6 +874,7 @@
           <div class="phone-mockup-wrapper">
             <div class="phone-mockup">
               <div class="phone-screen">
+                <div class="phone-dynamic-island"></div>
                 <div class="phone-status-bar">
                   <span>9:41</span>
                   <span>5G</span>
@@ -896,40 +902,32 @@
     <section class="conversation-section" id="conversationDemo">
       <div class="container">
         <h2>See how it works</h2>
-        <p class="conversation-intro">A real conversation from last Tuesday. From "we need food" to a full cart in under a minute.</p>
+        <p class="conversation-intro">A real Tuesday. Four texts. Cart ready.</p>
 
         <div class="full-conversation">
           <div class="sms-time">Tuesday 5:47 PM</div>
 
-          <div class="sms-bubble received" data-delay="0">Hey! How'd last week's meals turn out? Any hits or misses?</div>
+          <div class="sms-bubble received" data-delay="0">How'd last week go?</div>
 
-          <div class="sms-bubble sent" data-delay="400">The chicken thighs were great, pork cutlets were meh</div>
+          <div class="sms-bubble sent" data-delay="400">Chicken was a hit, kids hated the pork</div>
 
-          <div class="sms-bubble received" data-delay="800">Noted—I'll skip cutlet-style recipes for a while. Ready for this week? Still family of 4, no fish for Emma?</div>
+          <div class="sms-bubble received" data-delay="800">Noted—no pork for a while. Ready for this week? Still doing more veggie meals?</div>
 
-          <div class="sms-bubble sent" data-delay="1200">Yep, and we're trying to eat less meat this month</div>
+          <div class="sms-bubble sent" data-delay="1200">Yes please</div>
 
-          <div class="sms-bubble received" data-delay="1600">Got it. Here's your plan:</div>
-
-          <div class="sms-bubble received" data-delay="2000">
+          <div class="sms-bubble received" data-delay="1600">
             <div class="meal-plan-card">
-              <h4>Your Meal Plan</h4>
+              <h4>This Week</h4>
               <ul>
-                <li><strong>Mon:</strong> Crispy Chickpea Bowls with Tahini Sauce</li>
-                <li><strong>Tue:</strong> Sheet Pan Chicken Thighs with Lemony Potatoes</li>
-                <li><strong>Wed:</strong> Creamy Tomato Pasta with Burrata</li>
-                <li><strong>Thu:</strong> Korean Beef Bowls with Pickled Veggies</li>
+                <li><strong>Mon:</strong> Crispy Chickpea Bowls</li>
+                <li><strong>Tue:</strong> Chicken Thighs with Lemony Potatoes</li>
+                <li><strong>Wed:</strong> Creamy Tomato Pasta</li>
+                <li><strong>Thu:</strong> Black Bean Tacos</li>
               </ul>
             </div>
           </div>
 
-          <div class="sms-bubble received" data-delay="2400">Two meatless nights this week. Want me to build your Kroger cart?</div>
-
-          <div class="sms-bubble sent" data-delay="2800">Yes please</div>
-
-          <div class="sms-bubble received" data-delay="3200">Done! Your cart is ready with 23 items. <a href="#">Open in Kroger →</a></div>
-
-          <div class="sms-bubble received" data-delay="3600">Enjoy your week! I'll check in next Tuesday.</div>
+          <div class="sms-bubble received" data-delay="2000">Cart ready—24 items. <a href="#">Open in Kroger →</a></div>
         </div>
       </div>
     </section>
@@ -942,8 +940,8 @@
         <div class="steps">
           <div class="step">
             <div class="step-number">1</div>
-            <h3>Text your preferences</h3>
-            <p>Tell us what you like, what you don't. We remember and get better each week.</p>
+            <h3>Text us</h3>
+            <p>Tell us how many meals and what you're in the mood for. No app to download.</p>
           </div>
 
           <div class="step">
@@ -1032,7 +1030,7 @@
     <div class="container">
       <div class="footer-cta">
         <p>Ready to reclaim your evenings?</p>
-        <a href="sms:+15558675309" class="phone-number">(555) 867-5309</a>
+        <a href="sms:+19086766325" class="phone-number">(908) 676-MEAL</a>
       </div>
 
       <div class="footer-links">
