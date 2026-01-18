@@ -141,6 +141,7 @@
       text-decoration: none;
       display: inline-flex;
       align-items: center;
+      gap: 0.6rem;
       border-radius: 8px;
     }
 
@@ -149,9 +150,18 @@
       box-shadow: 0 0 0 3px var(--cream), 0 0 0 5px var(--terracotta);
     }
 
-    .logo-img {
-      height: 2.5rem;
-      width: auto;
+    .logo-icon {
+      width: 2.25rem;
+      height: 2.25rem;
+      flex-shrink: 0;
+    }
+
+    .logo-text {
+      font-family: var(--font-display);
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--charcoal);
+      letter-spacing: -0.01em;
     }
 
     /* ===== Hero Section ===== */
@@ -918,7 +928,17 @@
   <header>
     <div class="container">
       <a href="/" class="logo">
-        <img src="logo.png" alt="Weeknight" class="logo-img">
+        <svg class="logo-icon" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <!-- Hand holding fork with chat bubble tail -->
+          <path d="M20 3C11.2 3 4 9.5 4 17.5c0 4.5 2.3 8.5 6 11.2V36l6-4.5c1.3.3 2.6.5 4 .5 8.8 0 16-6.5 16-14.5S28.8 3 20 3z" fill="var(--terracotta)"/>
+          <!-- Fork tines -->
+          <path d="M15 10v7M20 8v9M25 10v7" stroke="var(--cream)" stroke-width="2.5" stroke-linecap="round"/>
+          <!-- Fork handle -->
+          <path d="M20 17v8" stroke="var(--cream)" stroke-width="2.5" stroke-linecap="round"/>
+          <!-- Plate/hand curve -->
+          <path d="M12 18c0 4.4 3.6 8 8 8s8-3.6 8-8" stroke="var(--cream)" stroke-width="2.5" stroke-linecap="round" fill="none"/>
+        </svg>
+        <span class="logo-text">Weeknight</span>
       </a>
     </div>
   </header>
