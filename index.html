@@ -32,7 +32,8 @@
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 
   <!-- Favicon -->
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='6' fill='%23C75B39'/><path d='M12 5c0 1.5-1 2.5-1 4s1 2 1 2M20 5c0 1.5-1 2.5-1 4s1 2 1 2' stroke='%23FDF6E9' stroke-width='2.5' stroke-linecap='round' fill='none'/><path d='M5 14h22v11a4 4 0 01-4 4H9a4 4 0 01-4-4V14z' fill='%23FDF6E9'/><path d='M8 29l-3 3v-4l3 1z' fill='%23FDF6E9'/></svg>">
+  <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
 
   <style>
     /* ===== CSS Reset & Base ===== */
@@ -137,14 +138,9 @@
     }
 
     .logo {
-      font-family: var(--font-display);
-      font-size: 1.5rem;
-      font-weight: 700;
-      color: var(--charcoal);
       text-decoration: none;
       display: inline-flex;
       align-items: center;
-      gap: 0.5rem;
       border-radius: 8px;
     }
 
@@ -153,22 +149,9 @@
       box-shadow: 0 0 0 3px var(--cream), 0 0 0 5px var(--terracotta);
     }
 
-    .logo-mark {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      width: 2rem;
-      height: 2rem;
-      background: var(--terracotta);
-      border-radius: 6px;
-      transform: rotate(-3deg);
-    }
-
-    .logo-mark svg {
-      width: 1.25rem;
-      height: 1.25rem;
-      fill: var(--cream);
-      stroke: var(--cream);
+    .logo-img {
+      height: 2.5rem;
+      width: auto;
     }
 
     /* ===== Hero Section ===== */
@@ -935,17 +918,7 @@
   <header>
     <div class="container">
       <a href="/" class="logo">
-        <span class="logo-mark">
-          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-            <!-- Steam wisps -->
-            <path d="M9 3.5c0 1.2-.8 2-1 3s.8 1.5 1 1.5M15 3.5c0 1.2-.8 2-1 3s.8 1.5 1 1.5" stroke-width="1.8" stroke-linecap="round" fill="none"/>
-            <!-- Chat bubble pot body -->
-            <path d="M4 11h16v8a3 3 0 01-3 3H7a3 3 0 01-3-3v-8z"/>
-            <!-- Chat bubble tail -->
-            <path d="M6 22l-2 2v-3l2 1z"/>
-          </svg>
-        </span>
-        Weeknight
+        <img src="logo.png" alt="Weeknight" class="logo-img">
       </a>
     </div>
   </header>
