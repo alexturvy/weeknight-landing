@@ -986,7 +986,7 @@
                   >
                 </div>
                 <label class="sms-consent">
-                  <input type="checkbox" id="smsConsent" name="smsConsent" required>
+                  <input type="checkbox" id="smsConsent" name="smsConsent">
                   <span>I agree to receive text messages from Weeknight about meal planning. Msg frequency varies. Msg & data rates may apply. Reply STOP to cancel, HELP for help. <a href="privacy.html">Privacy</a> & <a href="terms.html">Terms</a>.</span>
                 </label>
                 <button type="submit" class="btn btn-primary">Get your first text</button>
@@ -1212,14 +1212,6 @@
     signupForm.addEventListener('submit', async (e) => {
       e.preventDefault();
 
-      // Validate consent checkbox
-      if (!smsConsent.checked) {
-        formError.textContent = 'Please agree to receive text messages';
-        formError.classList.add('visible');
-        smsConsent.focus();
-        return;
-      }
-
       const phone = phoneInput.value.replace(/\D/g, '');
 
       // Validate phone number (10 digits)
@@ -1236,7 +1228,7 @@
 
       // For now, just log the phone number
       // TODO: Wire to actual API endpoint
-      console.log('Phone number submitted:', `+1${phone}`);
+      console.log('Phone number submitted:', `+1${phone}`, 'SMS consent:', smsConsent.checked);
 
       // Show success state
       signupForm.style.display = 'none';
