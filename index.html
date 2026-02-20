@@ -222,6 +222,7 @@
     @media (min-width: 500px) {
       .phone-form {
         flex-direction: row;
+        flex-wrap: wrap;
       }
     }
 
@@ -926,8 +927,10 @@
       font-size: 0.8125rem;
       color: var(--warm-gray);
       line-height: 1.4;
-      margin-top: 0.75rem;
+      margin-top: 0;
       cursor: pointer;
+      order: 3;
+      flex-basis: 100%;
     }
 
     .sms-consent input[type="checkbox"] {
